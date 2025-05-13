@@ -1,0 +1,26 @@
+# Node dependencies
+**/node_modules/
+
+# Strapi tmp + build
+backend/.cache/
+backend/build/
+backend/.tmp/          ← ta bort denna rad sen Du laddat upp dina böcker enligt lärarens instruktioner
+
+# Build
+**/build/
+**/dist/
+
+# OS-filer
+.DS_Store
+
+# Sass-map
+**/*.css.map
+
+
+node_modules/
+.build/
+.cache/
+dist/
+.env
+.tmp/
+public/uploads/

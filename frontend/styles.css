@@ -1,0 +1,91 @@
+/* Dölj + reset */
+.hidden { display: none !important; }
+body, h1,h2,h3,p,button,input,form { margin:0; padding:0; font-family:sans-serif; }
+
+/* Header */
+.site-header {
+  background: #007acc; color:#fff;
+  padding:1rem; display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.site-header button {
+  background:#005fa3; color:#fff;
+  border:none; padding:0.5rem 1rem;
+  border-radius:4px; cursor:pointer;
+}
+
+/* Bokkort-grid */
+#books-container {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:1rem; padding:1rem;
+}
+.book-card {
+  background:#f9f9f9; border-radius:6px;
+  padding:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  display:flex; flex-direction:column;
+  align-items:center;
+}
+.book-card img { max-width:100%; border-radius:4px; }
+.book-card h2 { font-size:1.1rem; margin:0.5rem 0; }
+.book-card p { font-size:0.9rem; margin-bottom:0.5rem; }
+.book-card button,
+.book-card .rating-control { width:100%; margin-top:0.5rem; }
+.book-card button {
+  padding:0.5rem; border:none; border-radius:4px;
+  background:#007acc; color:#fff; cursor:pointer;
+}
+.book-card button:hover { background:#005fa3; }
+.rating-control {
+  display:flex; align-items:center;
+  justify-content:space-between;
+}
+.rating-control select {
+  flex:1; margin-left:0.5rem; padding:0.3rem;
+}
+
+/* Modal-överlagring */
+#auth-modal {
+  position:fixed; top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.5);
+  display:flex; align-items:center;
+  justify-content:center; z-index:1000;
+}
+#auth-modal .modal-content {
+  background:#fff; border-radius:8px;
+  padding:2rem; width:90%; max-width:400px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  position:relative;
+}
+#auth-modal .modal-close {
+  position:absolute; top:0.5rem; right:0.5rem;
+  background:transparent; border:none;
+  font-size:1.4rem; cursor:pointer;
+}
+
+/* Form-styling */
+#auth-modal form {
+  display:flex; flex-direction:column;
+  margin-top:1rem;
+}
+#auth-modal form h2 { margin-bottom:0.5rem; }
+#auth-modal form label { margin-top:1rem; font-weight:bold; }
+#auth-modal form input {
+  padding:0.5rem; margin-top:0.3rem;
+  border:1px solid #ccc; border-radius:4px;
+}
+#auth-modal form button[type="submit"] {
+  margin-top:1.5rem; padding:0.7rem;
+  background:#007acc; color:#fff;
+  border:none; border-radius:4px;
+  cursor:pointer;
+}
+#auth-modal form button[type="submit"]:hover {
+  background:#005fa3;
+}
+#auth-modal hr {
+  margin:1.5rem 0; border:none;
+  border-top:1px solid #e0e0e0;
+}

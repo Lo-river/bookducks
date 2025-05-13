@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BookDucks</title>
+  <!-- Om du vill lägga CSS i en undermapp, justera href till css/styles.css -->
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <h1>BookDucks</h1>
+    <button id="login-btn">Logga in / Registrera</button>
+  </header>
+
+  <main id="books-container">
+    <!-- Här hamnar bokkorten -->
+  </main>
+
+  <!-- ENDAST EN modal-container -->
+  <div id="auth-modal" class="hidden">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Stäng">&times;</button>
+
+      <!-- Logga in -->
+      <form id="form-login">
+        <h2>Logga in</h2>
+        <label for="login-identifier">E-post eller användarnamn</label>
+        <input type="text" id="login-identifier" name="identifier" required>
+
+        <label for="login-password">Lösenord</label>
+        <input type="password" id="login-password" name="password" required>
+
+        <button type="submit">Logga in</button>
+      </form>
+
+      <hr>
+
+      <!-- Registrera -->
+      <form id="form-register">
+        <h2>Registrera</h2>
+        <label for="reg-username">Användarnamn</label>
+        <input type="text" id="reg-username" name="username" required>
+
+        <label for="reg-email">E-post</label>
+        <input type="email" id="reg-email" name="email" required>
+
+        <label for="reg-password">Lösenord</label>
+        <input type="password" id="reg-password" name="password" required>
+
+        <button type="submit">Registrera</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+
+    "liveServer.settings.port": 5512, 
+
+    "liveSassCompile.settings.formats": [
+      {
+        "format": "expanded",
+        "extensionName": ".css",
+        "savePath": "/frontend/css"
+      }
+    ],
+    "liveSassCompile.settings.includeItems": [
+      "/frontend/scss/main.scss"
+    ],
+    "liveSassCompile.settings.excludeList": [
+      "/node_modules/**"
+    ]
+  }
+  

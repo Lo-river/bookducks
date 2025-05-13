@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reading_list_items",
+  "info": {
+    "singularName": "reading-list-item",
+    "pluralName": "reading-list-items",
+    "displayName": "readingListItem",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "reading_list_item"
+    }
+  }
+}
