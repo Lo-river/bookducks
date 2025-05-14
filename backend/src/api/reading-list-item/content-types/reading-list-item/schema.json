@@ -4,18 +4,29 @@
   "info": {
     "singularName": "reading-list-item",
     "pluralName": "reading-list-items",
-    "displayName": "readingListItem",
+    "displayName": "ReadingListItem",
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "attributes": {
-    "users_permissions_user": {
+    "user": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "reading_list_item"
+      "inversedBy": "reading_list_items"
+    },
+    "rating": {
+      "type": "integer",
+      "min": 1,
+      "max": 10
+    },
+    "book": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::book.book",
+      "inversedBy": "reading_list_items"
     }
   }
 }

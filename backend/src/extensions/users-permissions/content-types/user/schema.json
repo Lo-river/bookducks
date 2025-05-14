@@ -3,10 +3,10 @@
   "collectionName": "up_users",
   "info": {
     "name": "user",
-    "description": "",
     "singularName": "user",
     "pluralName": "users",
-    "displayName": "User"
+    "displayName": "User",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -65,23 +65,23 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "reading_list_item": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::reading-list-item.reading-list-item",
-      "mappedBy": "users_permissions_user"
-    },
-    "rating": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::rating.rating",
-      "mappedBy": "users_permissions_user"
-    },
     "savedBooks": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::book.book",
       "inversedBy": "users"
+    },
+    "reading_list_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::reading-list-item.reading-list-item",
+      "mappedBy": "user"
+    },
+    "ratings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::rating.rating",
+      "mappedBy": "user"
     }
   }
 }

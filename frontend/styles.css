@@ -15,6 +15,7 @@ body, h1,h2,h3,p,button,input,form { margin:0; padding:0; font-family:sans-serif
   border-radius:4px; cursor:pointer;
 }
 
+
 /* Bokkort-grid */
 #books-container {
   display:grid;
@@ -27,9 +28,12 @@ body, h1,h2,h3,p,button,input,form { margin:0; padding:0; font-family:sans-serif
   display:flex; flex-direction:column;
   align-items:center;
 }
+
+
+
 .book-card img { max-width:100%; border-radius:4px; }
 .book-card h2 { font-size:1.1rem; margin:0.5rem 0; }
-.book-card p { font-size:0.9rem; margin-bottom:0.5rem; }
+.book-card p { font-size:0.9rem; margin-bottom:0.5rem; text-align: left !important }
 .book-card button,
 .book-card .rating-control { width:100%; margin-top:0.5rem; }
 .book-card button {
@@ -41,6 +45,10 @@ body, h1,h2,h3,p,button,input,form { margin:0; padding:0; font-family:sans-serif
   display:flex; align-items:center;
   justify-content:space-between;
 }
+
+
+
+
 .rating-control select {
   flex:1; margin-left:0.5rem; padding:0.3rem;
 }

@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>BookDucks</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="/frontend/styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="script.js" defer></script>
+  <script src="alternativscript.js" defer></script>
 </head>
 <body>
   <header class="site-header">

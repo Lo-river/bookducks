@@ -1,60 +1,3 @@
-// const API_BASE = 'http://localhost:1339/api';
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   const loginBtn = document.getElementById('login-btn');
-//   const modal = document.getElementById('auth-modal');
-//   const closeModal = document.querySelector('#auth-modal .modal-close');
-
-//   loginBtn.onclick = () => modal.classList.remove('hidden');
-//   closeModal.onclick = () => modal.classList.add('hidden');
-//   modal.onclick = e => {
-//     if (e.target.id === 'auth-modal') modal.classList.add('hidden');
-//   };
-
-//   fetchBooks();
-// });
-
-// async function fetchBooks() {
-//   const container = document.getElementById('books-container');
-//   container.innerHTML = 'Laddar böcker...';
-
-//   try {
-//     const res = await fetch(`${API_BASE}/books?populate=cover`);
-//     const json = await res.json();
-//     const books = json.data;
-
-//     container.innerHTML = books.map(book => {
-//       const title     = book.title;
-//       const author    = book.author;
-//       const pages     = book.pages;
-//       const published = book.published;
-
-//       -/-/ Direkt i objektet (inte nested i attributes längre som strapi v4)
-//       const coverData = book.cover;
-//       const coverUrl = coverData && coverData.url
-//         : 'https://via.placeholder.com/150';
-
-//       return `
-//         <article class="book-card">
-//           <img src="${coverUrl}" alt="${title} omslag" />
-//           <h2>${title}</h2>
-//           <p><strong>Författare:</strong> ${author}</p>
-//           <p><strong>Sidor:</strong> ${pages}</p>
-//           <p><strong>Utgivning:</strong> ${new Date(published).toLocaleDateString('sv-SE')}</p>
-//         </article>
-//       `;
-//     }).join('');
-//   } catch (err) {
-//     container.innerHTML = '<p>Kunde inte ladda böcker.</p>';
-//     console.error('Fel vid hämtning av böcker:', err);
-//   }
-// }
-
-
-// script.js
-// script.js
-
-
 // FUNKAR SOM DEN SKA:
 
 const API_BASE = 'http://localhost:1339/api';
@@ -64,7 +7,7 @@ let currentUser = localStorage.getItem('user')
   ? JSON.parse(localStorage.getItem('user'))
   : null;
 /** 
-** Håller koll på vilka böcker användaren redan sparat
+// Håller koll på vilka böcker användaren redan sparat
 */
 let savedBookIds = [];
 
@@ -142,7 +85,7 @@ async function fetchBooks() {
     container.innerHTML = books.map(book => {
       const { id, title, author, pages, published, cover, rating } = book;
       const coverUrl = cover?.url
-       ? `http://localhost:1339${cover.url}`
+        ? `http://localhost:1339${cover.url}`
         : 'https://via.placeholder.com/150';
 
       const already = savedBookIds.includes(id);
@@ -152,7 +95,7 @@ async function fetchBooks() {
 
       // Samma knappmarkup som i läslistan
       const saveBtn = jwt
-      ? `<button class="save-btn" data-id="${id}">${btnText}</button>`
+        ? `<button class="save-btn" data-id="${id}">${btnText}</button>`
         : '';
 
       return `
@@ -352,7 +295,7 @@ async function fetchSavedBooks() {
 
       const saveBtn = `<button class="save-btn" data-id="${id}">${btnText}</button>`;
 
-       // return `
+      // return `
       //   <section class="read-list-container">
       //     <article class="read-list">
       //       <img src="${coverUrl}" alt="${title} omslag" height="200" class="read-list-cover"/>
@@ -365,7 +308,7 @@ async function fetchSavedBooks() {
       //     </article>
       //   </section>
       // `;
- 
+
       return `
   <section class="read-list-container">
     <article class="read-list">
@@ -392,7 +335,7 @@ list.querySelectorAll('.save-btn').forEach(btn => {
   btn.onclick = () => toggleSaved(+btn.dataset.id);
 });
 
- // Knappar för att spara betyg
+// Knappar för att spara betyg
 list.querySelectorAll('.rate-btn').forEach(btn => {
   btn.onclick = async () => {
     const bookId = +btn.dataset.id;
@@ -414,6 +357,7 @@ list.querySelectorAll('.rate-btn').forEach(btn => {
       console.log('Alla items:', items);
       console.log('BookId att hitta:', bookId);
 
+      // 💡 RÄTT find() för Strapi v5
       const item = items.find(i => i.book?.id === bookId);
 
       if (!item) {
@@ -446,6 +390,3 @@ list.querySelectorAll('.rate-btn').forEach(btn => {
     console.error(err);
   }
 };
-
-
-// script.js

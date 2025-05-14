@@ -382,7 +382,7 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
     singularName: 'book';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     author: Schema.Attribute.String;
@@ -416,14 +416,15 @@ export interface ApiRatingRating extends Struct.CollectionTypeSchema {
   collectionName: 'ratings';
   info: {
     description: '';
-    displayName: 'rating';
+    displayName: 'Rating';
     pluralName: 'ratings';
     singularName: 'rating';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
+    book: Schema.Attribute.Relation<'manyToOne', 'api::book.book'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -434,21 +435,21 @@ export interface ApiRatingRating extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    users_permissions_user: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    value: Schema.Attribute.Integer &
+    rating: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {
-          max: 10;
+          max: 5;
           min: 1;
         },
         number
       >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -457,14 +458,15 @@ export interface ApiReadingListItemReadingListItem
   collectionName: 'reading_list_items';
   info: {
     description: '';
-    displayName: 'readingListItem';
+    displayName: 'ReadingListItem';
     pluralName: 'reading-list-items';
     singularName: 'reading-list-item';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
+    book: Schema.Attribute.Relation<'manyToOne', 'api::book.book'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -475,11 +477,19 @@ export interface ApiReadingListItemReadingListItem
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    rating: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 10;
+          min: 1;
+        },
+        number
+      >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    users_permissions_user: Schema.Attribute.Relation<
-      'oneToOne',
+    user: Schema.Attribute.Relation<
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
   };
@@ -966,9 +976,9 @@ export interface PluginUsersPermissionsUser
       }>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    rating: Schema.Attribute.Relation<'oneToOne', 'api::rating.rating'>;
-    reading_list_item: Schema.Attribute.Relation<
-      'oneToOne',
+    ratings: Schema.Attribute.Relation<'oneToMany', 'api::rating.rating'>;
+    reading_list_items: Schema.Attribute.Relation<
+      'oneToMany',
       'api::reading-list-item.reading-list-item'
     >;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
