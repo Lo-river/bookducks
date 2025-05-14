@@ -9,7 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -76,6 +76,12 @@
       "relation": "oneToOne",
       "target": "api::rating.rating",
       "mappedBy": "users_permissions_user"
+    },
+    "savedBooks": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::book.book",
+      "inversedBy": "users"
     }
   }
 }

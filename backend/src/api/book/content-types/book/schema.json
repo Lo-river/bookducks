@@ -30,9 +30,7 @@
       "required": false,
       "allowedTypes": [
         "images",
-        "files",
-        "videos",
-        "audios"
+        "files"
       ]
     },
     "ratings": {
@@ -44,6 +42,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::reading-list-item.reading-list-item"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "savedBooks"
     }
   }
 }
