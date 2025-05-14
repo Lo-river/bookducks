@@ -416,7 +416,7 @@ export interface ApiRatingRating extends Struct.CollectionTypeSchema {
   collectionName: 'ratings';
   info: {
     description: '';
-    displayName: 'Rating';
+    displayName: 'rating';
     pluralName: 'ratings';
     singularName: 'rating';
   };
