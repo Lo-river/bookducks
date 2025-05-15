@@ -38,12 +38,6 @@
       "relation": "oneToMany",
       "target": "api::reading-list-item.reading-list-item",
       "mappedBy": "book"
-    },
-    "users": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "plugin::users-permissions.user",
-      "mappedBy": "savedBooks"
     }
   }
 }

@@ -154,12 +154,6 @@ user schema.json:
       "inversedBy": "users",
       "configurable": false
     },
-    "savedBooks": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::book.book",
-      "inversedBy": "users"
-    },
     "reading_list_items": {
       "type": "relation",
       "relation": "oneToMany",
