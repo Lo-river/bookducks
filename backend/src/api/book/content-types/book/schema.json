@@ -28,7 +28,10 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images", "files"]
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
     },
     "reading_list_items": {
       "type": "relation",
@@ -41,12 +44,6 @@
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "mappedBy": "savedBooks"
-    },
-    "ratings": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::rating.rating",
-      "mappedBy": "book"
     }
   }
 }

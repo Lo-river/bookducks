@@ -281,6 +281,18 @@ async function fetchSavedBooks() {
       return;
     }
 
+  const ratingsMap = {};
+  const ratingResp = await axios.get(
+    `${API_BASE}/reading-list-items?populate=book&filters[user][id][$eq]=${currentUser.id}`,
+    { headers: { Authorization: `Bearer ${jwt}` } }
+  );
+  ratingResp.data.data.forEach(item => {
+    if (item.book?.id && item.rating) {
+      ratingsMap[item.book.id] = item.rating;
+    }
+  });
+
+
     list.innerHTML = rel.map(item => {
       const book = item.attributes ?? item;
       const coverUrl = book.cover?.url
@@ -318,10 +330,13 @@ async function fetchSavedBooks() {
         <p><strong>Betyg:</strong> ${rating || 'Inget betyg ännu'}</p>
 
         <label for="rating-${id}">Sätt betyg (1–5):</label>
-        <select id="rating-${id}" class="rating-select">
-          <option value="">Välj</option>
-          ${[1, 2, 3, 4, 5].map(n => `<option value="${n}">${n}</option>`).join('')}
-        </select>
+ <select id="rating-${id}" class="rating-select">
+  <option value="">Välj</option>
+  ${[1, 2, 3, 4, 5].map(n => {
+    const selected = ratingsMap[id] === n ? 'selected' : '';
+    return `<option value="${n}" ${selected}>${n}</option>`;
+  }).join('')}
+</select>
         <button class="rate-btn" data-id="${id}">Spara betyg</button>
         ${saveBtn}
       </div>
@@ -336,6 +351,8 @@ list.querySelectorAll('.save-btn').forEach(btn => {
 });
 
 // Knappar för att spara betyg
+
+
 list.querySelectorAll('.rate-btn').forEach(btn => {
   btn.onclick = async () => {
     const bookId = +btn.dataset.id;
@@ -348,28 +365,27 @@ list.querySelectorAll('.rate-btn').forEach(btn => {
     }
 
     try {
+      // Hämta alla items för användaren
       const resp = await axios.get(
-        `${API_BASE}/reading-list-items?populate=book&filters[user][id][$eq]=${currentUser.id}`,
+        `${API_BASE}/reading-list-items?filters[user][id][$eq]=${currentUser.id}&filters[book][id][$eq]=${bookId}`,
         { headers: { Authorization: `Bearer ${jwt}` } }
       );
-
       const items = resp.data.data;
-      console.log('Alla items:', items);
-      console.log('BookId att hitta:', bookId);
-
-      // 💡 RÄTT find() för Strapi v5
-      const item = items.find(i => i.book?.id === bookId);
+      const item = items[0]; // borde bara finnas ett
 
       if (!item) {
         alert('Kunde inte hitta din läslista-post för denna bok.');
         return;
       }
 
-      await axios.put(`${API_BASE}/reading-list-items/${item.id}`, {
-        data: { rating: rating }
-      }, {
-        headers: { Authorization: `Bearer ${jwt}` }
-      });
+      // Uppdatera befintlig item med rating
+      await axios.put(
+        `${API_BASE}/reading-list-items/${item.id}`,
+        {
+          data: { rating: rating }
+        },
+        { headers: { Authorization: `Bearer ${jwt}` } }
+      );
 
       alert(`Betyget ${rating} sparades!`);
       fetchSavedBooks();
@@ -379,7 +395,6 @@ list.querySelectorAll('.rate-btn').forEach(btn => {
     }
   };
 });
-
 
 
     list.querySelectorAll('.save-btn').forEach(btn => {

@@ -396,7 +396,6 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
     pages: Schema.Attribute.Integer;
     published: Schema.Attribute.Date;
     publishedAt: Schema.Attribute.DateTime;
-    ratings: Schema.Attribute.Relation<'oneToMany', 'api::rating.rating'>;
     reading_list_items: Schema.Attribute.Relation<
       'oneToMany',
       'api::reading-list-item.reading-list-item'
@@ -407,47 +406,6 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     users: Schema.Attribute.Relation<
       'manyToMany',
-      'plugin::users-permissions.user'
-    >;
-  };
-}
-
-export interface ApiRatingRating extends Struct.CollectionTypeSchema {
-  collectionName: 'ratings';
-  info: {
-    description: '';
-    displayName: 'Rating';
-    pluralName: 'ratings';
-    singularName: 'rating';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    book: Schema.Attribute.Relation<'manyToOne', 'api::book.book'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::rating.rating'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    rating: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 5;
-          min: 1;
-        },
-        number
-      >;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    user: Schema.Attribute.Relation<
-      'manyToOne',
       'plugin::users-permissions.user'
     >;
   };
@@ -480,7 +438,7 @@ export interface ApiReadingListItemReadingListItem
     rating: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {
-          max: 10;
+          max: 5;
           min: 1;
         },
         number
@@ -976,7 +934,6 @@ export interface PluginUsersPermissionsUser
       }>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    ratings: Schema.Attribute.Relation<'oneToMany', 'api::rating.rating'>;
     reading_list_items: Schema.Attribute.Relation<
       'oneToMany',
       'api::reading-list-item.reading-list-item'
@@ -1010,7 +967,6 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::book.book': ApiBookBook;
-      'api::rating.rating': ApiRatingRating;
       'api::reading-list-item.reading-list-item': ApiReadingListItemReadingListItem;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

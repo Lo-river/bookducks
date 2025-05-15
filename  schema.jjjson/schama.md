@@ -1,3 +1,92 @@
+book schema.json: 
+
+{
+  "kind": "collectionType",
+  "collectionName": "books",
+  "info": {
+    "singularName": "book",
+    "pluralName": "books",
+    "displayName": "Book",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "pages": {
+      "type": "integer",
+      "required": false
+    },
+    "published": {
+      "type": "date"
+    },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "reading_list_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::reading-list-item.reading-list-item",
+      "mappedBy": "book"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "savedBooks"
+    }
+  }
+}
+
+
+reading-list-item schema.json:
+
+{
+  "kind": "collectionType",
+  "collectionName": "reading_list_items",
+  "info": {
+    "singularName": "reading-list-item",
+    "pluralName": "reading-list-items",
+    "displayName": "ReadingListItem",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "reading_list_items"
+    },
+    "rating": {
+      "type": "number",
+      "min": 1,
+      "max": 5
+    },
+    "book": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::book.book",
+      "inversedBy": "reading_list_items"
+    }
+  }
+}
+
+user schema.json:
 {
   "kind": "collectionType",
   "collectionName": "up_users",
