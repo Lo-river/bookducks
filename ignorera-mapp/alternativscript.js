@@ -43,69 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ===================== Ladda alla böcker ===========================
-// async function fetchBooks() {
-//   const container = document.getElementById('books-container');
-//   container.innerHTML = 'Laddar böcker…';
-
-//   try {
-//     if (jwt && currentUser) {
-//       await loadSavedItems();
-//     } else {
-//       savedItems = [];
-//     }
-
-//     const resp  = await axios.get(`${API_BASE}/books?populate=*`);
-//     const books = resp.data.data;
-//     //** */ DEBUG:
-//     console.log('Books fetched:', books);
-
-//     container.innerHTML = books.map(bookEntry => {
-//       const id        = bookEntry.id;
-//       const title     = bookEntry.title     || '—';
-//       const author    = bookEntry.author    || '—';
-//       const pages     = bookEntry.pages     ?? '—';
-//       const published = bookEntry.published || '—';
-//       const cover     = bookEntry.cover;
-//       const coverUrl  = cover && cover.url
-//         ? `${API_BASE.replace('/api','')}${cover.url}`
-//         : 'https://placeholder.com/150';
-
-//       const already = savedItems.some(x => x.bookId === id);
-//       const btnText = already
-//         ? 'Ta bort från läslista'
-//         : 'Lägg till i läslista';
-
-//       return `
-//         <article class="book-card">
-//           <img src="${coverUrl}" alt="${title} omslag" />
-//           <h2>${title}</h2>
-//           <div>
-//             <p><strong>Författare:</strong> ${author}</p>
-//             <p><strong>Sidor:</strong> ${pages}</p>
-//             <p><strong>Utgivningsdatum:</strong> ${published}</p>
-//           </div>
-//           ${jwt
-//             ? `<button class="save-btn" data-bookid="${id}" data-itemid="${already ? savedItems.find(x=>x.bookId===id).itemId : ''}">
-//   ${btnText}
-// </button>`
-//             : ''}
-//         </article>
-//       `;
-//     }).join('');
-
-//     if (jwt) {
-//       container.querySelectorAll('.save-btn').forEach(btn => {
-//         btn.onclick = () => {
-//           const bookId = +btn.dataset.bookid;
-//           const itemId = btn.dataset.itemid ? +btn.dataset.itemid : null;
-//           toggleSaved(bookId, itemId);
-//         };      });
-//     }
-//   } catch (err) {
-//     console.error('fetchBooks error', err);
-//     container.innerHTML = '<p>Kunde inte ladda böcker.</p>';
-//   }
-// }
 async function fetchBooks() {
   const container = document.getElementById('books-container');
   container.innerHTML = 'Laddar böcker…';
@@ -118,18 +55,25 @@ async function fetchBooks() {
     }
 
     const resp  = await axios.get(`${API_BASE}/books?populate=*`);
-    const books = resp.data.data; // OBS: varje objekt har .id + .attributes
+    const books = resp.data.data;
+    //** */ DEBUG:
+    console.log('Books fetched:', books);
 
-    container.innerHTML = books.map(entry => {
-      const { id, attributes } = entry;
-      const { title, author, pages, published, cover } = attributes;
-
-      const coverUrl = cover?.url
+    container.innerHTML = books.map(bookEntry => {
+      const id        = bookEntry.id;
+      const title     = bookEntry.title     || '—';
+      const author    = bookEntry.author    || '—';
+      const pages     = bookEntry.pages     ?? '—';
+      const published = bookEntry.published || '—';
+      const cover     = bookEntry.cover;
+      const coverUrl  = cover && cover.url
         ? `${API_BASE.replace('/api','')}${cover.url}`
         : 'https://placeholder.com/150';
 
       const already = savedItems.some(x => x.bookId === id);
-      const btnText = already ? 'Ta bort' : 'Lägg till';
+      const btnText = already
+        ? 'Ta bort från läslista'
+        : 'Lägg till i läslista';
 
       return `
         <article class="book-card">
@@ -137,19 +81,25 @@ async function fetchBooks() {
           <h2>${title}</h2>
           <div>
             <p><strong>Författare:</strong> ${author}</p>
-            <p><strong>Sidor:</strong> ${pages ?? '–'}</p>
-            <p><strong>Utgivningsår:</strong> ${published}</p>
+            <p><strong>Sidor:</strong> ${pages}</p>
+            <p><strong>Utgivningsdatum:</strong> ${published}</p>
           </div>
-          ${jwt ? `<button class="save-btn" data-bookid="${id}">${btnText}</button>` : ''}
+          ${jwt
+            ? `<button class="save-btn" data-bookid="${id}" data-itemid="${already ? savedItems.find(x=>x.bookId===id).itemId : ''}">
+  ${btnText}
+</button>`
+            : ''}
         </article>
       `;
     }).join('');
 
-    // Sätt knapparna
     if (jwt) {
       container.querySelectorAll('.save-btn').forEach(btn => {
-        btn.onclick = () => toggleSaved(+btn.dataset.bookid);
-      });
+        btn.onclick = () => {
+          const bookId = +btn.dataset.bookid;
+          const itemId = btn.dataset.itemid ? +btn.dataset.itemid : null;
+          toggleSaved(bookId, itemId);
+        };      });
     }
   } catch (err) {
     console.error('fetchBooks error', err);
